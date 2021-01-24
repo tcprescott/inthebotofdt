@@ -65,8 +65,8 @@ async def updateanswers(ctx):
         await ctx.reply("No attachment found.")
 
 
-@bot.command(aliases=["q"])
-async def question(ctx, question_id: int = None):
+@bot.command(aliases=["question", "q"])
+async def gentest(ctx, question_id: int = None):
     questions = await parsefile("questions.txt")
     if question_id is None:
         question_id = random.choice(list(questions.keys()))
