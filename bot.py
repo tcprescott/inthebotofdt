@@ -47,40 +47,66 @@ async def on_command_completion(ctx):
 
 @bot.command()
 @commands.check_any(is_dt(), commands.is_owner())
-async def updatequestions(ctx):
+async def update(ctx, question_set, filetype):
     if ctx.message.attachments:
-        await ctx.message.attachments[0].save(os.path.join('data', "questions.txt"))
-        await ctx.reply("Questions updated successfully.")
+        await ctx.message.attachments[0].save(os.path.join('data', f"{question_set}_{filetype}.txt"))
+        await ctx.reply(f"{filetype} for {question_set} updated successfully.")
     else:
         await ctx.reply("No attachment found.")
 
 
 @bot.command()
-@commands.check_any(is_dt(), commands.is_owner())
-async def updateanswers(ctx):
-    if ctx.message.attachments:
-        await ctx.message.attachments[0].save(os.path.join('data', "answers.txt"))
-        await ctx.reply("Answers updated successfully.")
-    else:
-        await ctx.reply("No attachment found.")
-
-
-@bot.command(aliases=["question", "q"])
-async def gentest(ctx, question_id: int = None):
-    questions = await parsefile("questions.txt")
-    if question_id is None:
-        question_id = random.choice(list(questions.keys()))
+async def gentest(ctx):
+    questions = await parsefile("gen_question.txt")
+    question_id = random.choice(list(questions.keys()))
     try:
-        await ctx.reply(f"Question #{question_id}:\n\n{questions[question_id]}")
+        await ctx.reply(f"Question gentest #{question_id}:\n\n{questions[question_id]}")
     except KeyError:
         await ctx.reply("That question id does not exist.")
 
 
 @bot.command(aliases=["a"])
-async def answer(ctx, question_id: int):
-    answers = await parsefile("answers.txt")
+async def genquestion(ctx, question_id: int):
+    questions = await parsefile("gen_question.txt")
     try:
-        await ctx.reply(f"Answer for question #{question_id}:\n\n{answers[question_id]}")
+        await ctx.reply(f"Question gentest #{question_id}:\n\n{questions[question_id]}")
+    except KeyError:
+        await ctx.reply("That question id does not exist.")
+
+
+@bot.command(aliases=["a"])
+async def genanswer(ctx, question_id: int):
+    answer = await parsefile("gen_answer.txt")
+    try:
+        await ctx.reply(f"Answer for gentest question #{question_id}:\n\n{answer[question_id]}")
+    except KeyError:
+        await ctx.reply("That question id does not exist.")
+
+
+@bot.command()
+async def airtest(ctx):
+    questions = await parsefile("air_question.txt")
+    question_id = random.choice(list(questions.keys()))
+    try:
+        await ctx.reply(f"Question airtest #{question_id}:\n\n{questions[question_id]}")
+    except KeyError:
+        await ctx.reply("That question id does not exist.")
+
+
+@bot.command(aliases=["a"])
+async def airquestion(ctx, question_id: int):
+    questions = await parsefile("air_question.txt")
+    try:
+        await ctx.reply(f"Question airtest #{question_id}:\n\n{questions[question_id]}")
+    except KeyError:
+        await ctx.reply("That question id does not exist.")
+
+
+@bot.command(aliases=["a"])
+async def airanswer(ctx, question_id: int):
+    answer = await parsefile("air_answer.txt")
+    try:
+        await ctx.reply(f"Answer for airtest question #{question_id}:\n\n{answer[question_id]}")
     except KeyError:
         await ctx.reply("That question id does not exist.")
 
@@ -92,7 +118,7 @@ async def parsefile(filename):
         content = await f.readlines()
 
     for c in content:
-        if (res := re.search("G([0-9]*)\.\ (.*)", c)) is not None:
+        if (res := re.search(".([0-9]*)\.\ (.*)", c)) is not None:
             d[int(res.groups()[0])] = res.groups()[1]
 
     return d
