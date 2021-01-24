@@ -1,4 +1,5 @@
 import asyncio
+import random
 import re
 import os
 
@@ -65,21 +66,23 @@ async def updateanswers(ctx):
 
 
 @bot.command(aliases=["q"])
-async def question(ctx, question_id: int):
+async def question(ctx, question_id: int = None):
     questions = await parsefile("questions.txt")
+    if question_id is None:
+        question_id = random.choice(list(questions.keys()))
     try:
-        await ctx.reply(questions[question_id])
+        await ctx.reply(f"Question #{question_id}:\n\n{questions[question_id]}")
     except KeyError:
         await ctx.reply("That question id does not exist.")
 
 
 @bot.command(aliases=["a"])
-async def answer(ctx, answer_id: int):
+async def answer(ctx, question_id: int):
     answers = await parsefile("answers.txt")
     try:
-        await ctx.reply(answers[answer_id])
+        await ctx.reply(f"Answer for question #{question_id}:\n\n{answers[question_id]}")
     except KeyError:
-        await ctx.reply("That answer id does not exist.")
+        await ctx.reply("That question id does not exist.")
 
 
 async def parsefile(filename):
