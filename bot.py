@@ -131,7 +131,7 @@ async def genoralanswer(ctx, question_id: int):
 
 
 @bot.command()
-async def airoraltest(ctx):
+async def airoral(ctx):
     questions = await parsefile("airoral_question.txt")
     question_id = random.choice(list(questions.keys()))
     try:
