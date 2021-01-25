@@ -57,26 +57,26 @@ async def update(ctx, question_set, filetype):
 
 @bot.command()
 async def gentest(ctx):
-    questions = await parsefile("gen_question.txt")
+    questions = await parsefile("gentest_question.txt")
     question_id = random.choice(list(questions.keys()))
     try:
-        await ctx.reply(f"Question gentest #{question_id}:\n\n{questions[question_id]}")
+        await ctx.reply(f"Question gentest #{question_id}:\n\n{questions[question_id]}\n\n`!genanswer {question_id}` to get answer.")
     except KeyError:
         await ctx.reply("That question id does not exist.")
 
 
-@bot.command(aliases=["a"])
+@bot.command()
 async def genquestion(ctx, question_id: int):
-    questions = await parsefile("gen_question.txt")
+    questions = await parsefile("gentest_question.txt")
     try:
-        await ctx.reply(f"Question gentest #{question_id}:\n\n{questions[question_id]}")
+        await ctx.reply(f"Question gentest #{question_id}:\n\n{questions[question_id]}\n\n`!genanswer {question_id}` to get answer.")
     except KeyError:
         await ctx.reply("That question id does not exist.")
 
 
-@bot.command(aliases=["a"])
+@bot.command()
 async def genanswer(ctx, question_id: int):
-    answer = await parsefile("gen_answer.txt")
+    answer = await parsefile("gentest_answer.txt")
     try:
         await ctx.reply(f"Answer for gentest question #{question_id}:\n\n{answer[question_id]}")
     except KeyError:
@@ -85,26 +85,26 @@ async def genanswer(ctx, question_id: int):
 
 @bot.command()
 async def airtest(ctx):
-    questions = await parsefile("air_question.txt")
+    questions = await parsefile("airtest_question.txt")
     question_id = random.choice(list(questions.keys()))
     try:
-        await ctx.reply(f"Question airtest #{question_id}:\n\n{questions[question_id]}")
+        await ctx.reply(f"Question airtest #{question_id}:\n\n{questions[question_id]}\n\n`!airanswer {question_id}` to get answer.")
     except KeyError:
         await ctx.reply("That question id does not exist.")
 
 
-@bot.command(aliases=["a"])
+@bot.command()
 async def airquestion(ctx, question_id: int):
-    questions = await parsefile("air_question.txt")
+    questions = await parsefile("airtest_question.txt")
     try:
-        await ctx.reply(f"Question airtest #{question_id}:\n\n{questions[question_id]}")
+        await ctx.reply(f"Question airtest #{question_id}:\n\n{questions[question_id]}\n\n`!airanswer {question_id}` to get answer.")
     except KeyError:
         await ctx.reply("That question id does not exist.")
 
 
-@bot.command(aliases=["a"])
+@bot.command()
 async def airanswer(ctx, question_id: int):
-    answer = await parsefile("air_answer.txt")
+    answer = await parsefile("airtest_answer.txt")
     try:
         await ctx.reply(f"Answer for airtest question #{question_id}:\n\n{answer[question_id]}")
     except KeyError:
