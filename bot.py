@@ -103,10 +103,57 @@ async def airquestion(ctx, question_id: int):
 
 
 @bot.command()
-async def airanswer(ctx, question_id: int):
-    answer = await parsefile("airtest_answer.txt")
+async def genoral(ctx):
+    questions = await parsefile("genoral_question.txt")
+    question_id = random.choice(list(questions.keys()))
     try:
-        await ctx.reply(f"Answer for airtest question #{question_id}:\n\n{answer[question_id]}")
+        await ctx.reply(f"Question genoral #{question_id}:\n\n{questions[question_id]}\n\n`!genoralanswer {question_id}` to get answer.")
+    except KeyError:
+        await ctx.reply("That question id does not exist.")
+
+
+@bot.command()
+async def genoralquestion(ctx, question_id: int):
+    questions = await parsefile("genoral_question.txt")
+    try:
+        await ctx.reply(f"Question genoral #{question_id}:\n\n{questions[question_id]}\n\n`!genoralanswer {question_id}` to get answer.")
+    except KeyError:
+        await ctx.reply("That question id does not exist.")
+
+
+@bot.command()
+async def genoralanswer(ctx, question_id: int):
+    answer = await parsefile("genoral_answer.txt")
+    try:
+        await ctx.reply(f"Answer for genoral question #{question_id}:\n\n{answer[question_id]}")
+    except KeyError:
+        await ctx.reply("That question id does not exist.")
+
+
+@bot.command()
+async def airoraltest(ctx):
+    questions = await parsefile("airoral_question.txt")
+    question_id = random.choice(list(questions.keys()))
+    try:
+        await ctx.reply(f"Question airoral #{question_id}:\n\n{questions[question_id]}\n\n`!airoralanswer {question_id}` to get answer.")
+    except KeyError:
+        await ctx.reply("That question id does not exist.")
+
+
+@bot.command()
+async def airoralquestion(ctx, question_id: int):
+    questions = await parsefile("airoral_question.txt")
+    try:
+        await ctx.reply(f"Question airoral #{question_id}:\n\n{questions[question_id]}\n\n`!airoralanswer {question_id}` to get answer.")
+    except KeyError:
+        await ctx.reply("That question id does not exist.")
+
+
+@bot.command()
+async def airoralanswer(ctx, question_id: int):
+    answer = await parsefile("airoral_answer.txt")
+    try:
+        await ctx.reply(f"Answer for airoral question #{question_id}:\n\n{answer[question_id]}")
     except KeyError:
         await ctx.reply("That question id does not exist.")
 
