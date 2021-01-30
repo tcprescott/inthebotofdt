@@ -103,6 +103,15 @@ async def airquestion(ctx, question_id: int):
 
 
 @bot.command()
+async def airanswer(ctx, question_id: int):
+    answer = await parsefile("airtest_answer.txt")
+    try:
+        await ctx.reply(f"Answer for airtest question #{question_id}:\n\n{answer[question_id]}")
+    except KeyError:
+        await ctx.reply("That question id does not exist.")
+
+
+@bot.command()
 async def genoral(ctx):
     questions = await parsefile("genoral_question.txt")
     question_id = random.choice(list(questions.keys()))
