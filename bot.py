@@ -167,6 +167,33 @@ async def airoralanswer(ctx, question_id: int):
         await ctx.reply("That question id does not exist.")
 
 
+@bot.command()
+async def powertest(ctx):
+    questions = await parsefile("power_question.txt")
+    question_id = random.choice(list(questions.keys()))
+    try:
+        await ctx.reply(f"Question power #{question_id}:\n\n{questions[question_id]}\n\n`!poweranswer {question_id}` to get answer.")
+    except KeyError:
+        await ctx.reply("That question id does not exist.")
+
+
+@bot.command()
+async def powerquestion(ctx, question_id: int):
+    questions = await parsefile("power_question.txt")
+    try:
+        await ctx.reply(f"Question power #{question_id}:\n\n{questions[question_id]}\n\n`!poweranswer {question_id}` to get answer.")
+    except KeyError:
+        await ctx.reply("That question id does not exist.")
+
+
+@bot.command()
+async def poweranswer(ctx, question_id: int):
+    answer = await parsefile("airoral_answer.txt")
+    try:
+        await ctx.reply(f"Answer for airoral question #{question_id}:\n\n{answer[question_id]}")
+    except KeyError:
+        await ctx.reply("That question id does not exist.")
+
 async def parsefile(filename):
     d = {}
 
