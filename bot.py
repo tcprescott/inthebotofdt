@@ -169,7 +169,7 @@ async def airoralanswer(ctx, question_id: int):
 
 @bot.command()
 async def powertest(ctx):
-    questions = await parsefile("power_question.txt")
+    questions = await parsefile("powertest_question.txt")
     question_id = random.choice(list(questions.keys()))
     try:
         await ctx.reply(f"Question power #{question_id}:\n\n{questions[question_id]}\n\n`!poweranswer {question_id}` to get answer.")
